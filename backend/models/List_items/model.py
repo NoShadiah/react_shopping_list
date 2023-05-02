@@ -16,7 +16,7 @@ class Item(db.Model):
     __tablename__ = "Food_Items"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
-    # image = db.Column(db.String(200))
+    in_category = db.Column(db.String(200))
     description = db.Column(db.String(250))
     status = db.Column(db.String(10))
     registered_by = db.Column(db.Integer, db.ForeignKey('users.id'))

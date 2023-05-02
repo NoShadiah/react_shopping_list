@@ -26,8 +26,8 @@ class User(db.Model):
   registered_at = db.Column(db.String(200),nullable=True, default=datetime.now())
   updated_at = db.Column(db.String(200),nullable=True, onupdate=datetime.now())
   
-  
-  list_items = db.relationship("Item", backref="user")
+  items = db.relationship("Item", backref="user")
+
   def __init__(self, first_name, last_name, email,contact,user_type,password, gender, address):
    self.first_name = first_name
    self.last_name = last_name

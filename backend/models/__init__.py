@@ -30,22 +30,13 @@ def create_app(config_name):
     Swagger(app, config=swagger_config, template=template)
 
     from models.users.controller import users
+    from models.List_items.controller import listItems
     
-    # from models.food_categories.controller import foodcategories
-    # from models.gallery.controller import gallery
-    # from models.menu.controller import menu
-    # from models.settings.controller import settings
-    from models.List_items.controller import items
-    # from models.orders.controller import orders
 
     #registering blueprints    
     app.register_blueprint(users)
-    # app.register_blueprint(foodcategories)
-    # app.register_blueprint(gallery)
-    # app.register_blueprint(menu)
-    # app.register_blueprint(settings)
-    app.register_blueprint(items)
-    # app.register_blueprint(orders)
+    app.register_blueprint(listItems)
+    
 
    
     return app

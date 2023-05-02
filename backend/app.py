@@ -17,11 +17,5 @@ migrate = Migrate(app, db)
 def make_shell_context():
    return dict(db=db, 
                User=User, 
-               # FoodCategory=FoodCategory, 
-                
-               # MenuItem=MenuItem, 
-               # Settings=Settings, 
-               Item=Item,
-               # GalleryItem = GalleryItem,
-               # Order=Order
+               Item=Item
                )

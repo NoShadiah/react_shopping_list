@@ -5,7 +5,7 @@ from flasgger import swag_from
 from flask import  jsonify, request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-listItems = Blueprint("listItems", __name__, url_prefix="/api/v2/listItems")
+listItems = Blueprint("listItems", __name__, url_prefix="/api/v1/items")
 
 @listItems.route("/all", methods=["GET"])
 @jwt_required()

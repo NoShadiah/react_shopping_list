@@ -14,7 +14,7 @@ class DevelopmentConfig(Config):
    basedir = os.path.abspath(os.path.dirname(__file__))
     # In this, am telling SQLAlchemy tha in the os library, set a path, 
     # the absolute path is a function that takes in the path of the working directory, where this file is.
-   conn = os.path.join(basedir, 'christiner_dinnings_MS.db')
+   conn = os.path.join(basedir, 'shoppingList.db')
     # configuring the application/connecting to the database
    SQLALCHEMY_DATABASE_URI=\
                                 'sqlite:///'+conn
