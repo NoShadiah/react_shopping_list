@@ -7,10 +7,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt_identity, unset_jwt_cookies
 from flasgger import swag_from
 
-users = Blueprint('users', __name__, url_prefix='/api/v2/users')
+users = Blueprint('users', __name__, url_prefix='/api/v1/users')
 
 #user login
-@users.route("/token", methods=["POST"])
+@users.route("/login", methods=["POST"])
 @swag_from('../documentation/docs/user/login.yaml')
 def login():
     email = request.json.get("email")
@@ -141,7 +141,7 @@ def create_user():
     return jsonify({
                     'Success':True,
                     'Message':f"{new_user.first_name} you have successfully created an account",
-                    }),201
+                    },201)
 
 
 

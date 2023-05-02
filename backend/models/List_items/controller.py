@@ -5,7 +5,7 @@ from flasgger import swag_from
 from flask import  jsonify, request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-listItems = Blueprint("listItems", __name__, url_prefix="/api/v1/items")
+listItems = Blueprint("listItems", __name__, url_prefix="/api/v1/listItems")
 
 @listItems.route("/all", methods=["GET"])
 @jwt_required()
@@ -21,8 +21,9 @@ def get_all():
             "id":item.id,
             "name":item.name,
             # "image":item.image,
-            "description":item .description,
-            "in_category":item.status,
+            "price":item .price,
+            "status":item.status,
+            "quantity":item.quantity,
             "registered_at":item.registered_at,
             "registered_by":item.registered_by,
             "updated_at":item.updated_at
@@ -36,21 +37,21 @@ def specific_item():
     user_logged_in=get_jwt_identity()
     check_user_details = User.query.filter_by(id=user_logged_in).first()
     userType = check_user_details.user_type
-    if userType != "super admin":
+    if userType == "super admin":
         return {"message":"Sorry access denied"}
     else:            
             def register():
                 name = request.json["name"]
-                # image = request.json["image"]
-                description = request.json["description"]
+                quantity = request.json["quantity"]
+                price = request.json["price"]
                 registered_by =user_logged_in
-                registered_by = "11"
-                if not name  or not description:
+                
+                if not name  or not price:
                     return {"message":"All fields are required"}
                 
                 new_item = Item(name=name, 
-                                    # image=image, 
-                                    description=description, registered_by=registered_by)
+                                    quantity=quantity, 
+                                    price=price, registered_by=registered_by)
                 db.session.add(new_item)
                 db.session.commit()
                 return {"message":"successfully added a new food item", "data": new_item}
@@ -76,9 +77,9 @@ def single_item(id):
                 item.name = request.json["name"]
                 # item.image = request.json["image"]
                 item.status = request.json["status"]
-                item.description = request.json["description"]
+                item.price = request.json["price"]
                 
-                if not item.name  or not item.decription or not item:
+                if not item.name  or not item.price or not item.name:
                      
                      return {"message":"All fields required"}
                 else:

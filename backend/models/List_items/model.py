@@ -7,18 +7,22 @@ from dataclasses import dataclass
 class Item(db.Model):
     id:int
     name:str
-    # image:str
+    status:str
     description:str
-    in_category:str
+    price :str
+    registered_at:str
+    quantity:str
     registered_at:str
     
 
     __tablename__ = "Food_Items"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100))
-    in_category = db.Column(db.String(200))
-    description = db.Column(db.String(250))
-    status = db.Column(db.String(10))
+    status = db.Column(db.String(200))
+    price_unit = db.Column(db.String(4) default="UGX: ")
+    price = db.Column(db.String(250))
+    quantity = db.Column(db.Integer)
+    grand_price = db.Column(db.Integer)
     registered_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     registered_at = db.Column(db.String(200), default=datetime.now())
     updated_at = db.Column(db.String(200), onupdate=datetime.now())
