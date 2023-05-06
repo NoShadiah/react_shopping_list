@@ -33,10 +33,10 @@ def login():
                         "refresh_token":f"{refresh_token}",
                         "user_type":user.user_type}
             else:
-                return "Provided an incorrect password"
+                return {"message":"Provided an incorrect password"}
         return password()
     else:
-        return "Email does not exist"   
+        return {"message":"Email does not exist, check email and try again or signUp"}   
         
 
         
@@ -49,8 +49,8 @@ def all_users():
     user_logged_in=get_jwt_identity()
     check_user_details = User.query.filter_by(id=user_logged_in).first()
     userType = check_user_details.user_type
-    if userType == "client" or userType == "customer":
-        return {"message":"Sorry but access denied, you are unauthorized"}
+    if userType == "client":
+        return {"message":"Sorry but you are unauthorized", "status code":401}
     
 
     else:
@@ -68,7 +68,7 @@ def all_users():
             "Updated at":user.updated_at
         }for user in users]
         return jsonify(
-                response),200
+                {"Users": response,"status code": 200} )
 
 @users.route('/register',methods=['POST'])
 def create_user():
@@ -93,33 +93,34 @@ def create_user():
         return jsonify({'Message':"Last name is required"}),400
     
     if not user_email:
-        return jsonify({'Message':"Email is required"}),400
+        return jsonify({'Message':"Email is required"}, 400)
     
     if not user_contact:
-        return jsonify({'Message':"Contact is required"}),400
+        return jsonify({'Message':"Contact is required"}, 400)
     
     if not user_password:
-        return jsonify({'Message':"Password is required"}),400
+        return jsonify({'Message':"Password is required"}, 400)
     if not user_gender:
-        return {"message":"Your gender is required, either male or female"}
+        return {"message":"Your gender is required, either male or female", "status code":400}
     if  not user_user_type:
         default = "client"
         user_user_type = default
     
     # password validation length
-    if len(user_password)<6:
+    if len(user_password)<8:
         return jsonify({'Message':"Password must be atleast 6 characters long"})
     
-    
+    if len(user_password)>20:
+        return jsonify({'Message':"Password must be must be less than 20 characters"})
     
     #constaints
     if User.query.filter_by(email=user_email).first():
-       return jsonify({'Message':"Email already exists"}),409
+       return jsonify({'Message':"Email already exists"},409)
     
     
     existing_user_contact=User.query.filter_by(contact=user_contact).first()
     if existing_user_contact:
-            return jsonify({'Message':"Contact already in use"}),409
+            return jsonify({'Message':"Contact already in use"},409)
      
     
 
@@ -140,17 +141,17 @@ def create_user():
     db.session.commit()
     return jsonify({
                     'Success':True,
-                    'Message':f"{new_user.first_name} you have successfully created an account",
+                    'Message':f"{new_user.first_name} you have successfully created an account with our shopping list app",
                     },201)
 
 
+@users.route('/user/<user_id>', methods=['GET', 'PUT', 'DELETE'])
+@jwt_required()
+def handle_user(user_id):
 
-
+    user_logged_in=get_jwt_identity()
     
 
-
-@users.route('/user/<user_id>', methods=['GET', 'PUT', 'DELETE'])
-def handle_user(user_id):
     user = User.query.get_or_404(user_id)
 
     if request.method == 'GET':
@@ -183,7 +184,7 @@ def handle_user(user_id):
         
         user.first_name = data['first name']
         user.last_name = data['last name']
-        user.email = data['email']
+        # user.email = data['email']
         user.contact = data['contact']
         user.password = generate_password_hash(data['password'])
         # user.updated_at = datetime.now()
@@ -197,7 +198,7 @@ def handle_user(user_id):
         else:
             db.session.delete(user)
             db.session.commit()
-            return {"message": f"User {user.first_name} successfully deleted."}   
+            return {"message": f"{user.firstname} {user.lastname}, you successfully deleted your account"}   
   
 # logging out a user
 # unset_jwt_cookies function which deletes the cookies containing the access token for the user
@@ -206,5 +207,3 @@ def logout():
     response = jsonify({"message": "logout successful"})
     unset_jwt_cookies(response)
     return response
-
-
