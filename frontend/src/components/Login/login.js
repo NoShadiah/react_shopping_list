@@ -20,6 +20,9 @@ export function Login(){
                 </div>
                 <div><button>Submit</button></div>
             </form>
+            <div>
+                <p>Don't have an account| <button>SignUp</button></p>
+            </div>
         </div>
     );
 } 

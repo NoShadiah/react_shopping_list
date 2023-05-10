@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Login } from "../Login/login";
 import { SignUp } from "../Signup/signup";
 import {Navigate, Link} from "react-router-dom";
+import { Items } from "../items/overrall/overall";
 import "./home.css"
 
 export function Home(){
@@ -13,8 +14,7 @@ export function Home(){
             
                 <nav id="header">
                     <button onClick={()=>setActive('Home')}>Home</button>
-                    <button onClick={()=>setActive('Login')}>Login</button>
-                    <button onClick={()=>setActive('Signup')}>SignUp</button>
+                    
                 </nav>
             
            
@@ -25,13 +25,19 @@ export function Home(){
                     <div>
                     
                         {active === 'Home' && <div>
+                            <nav>
+                            <button onClick={()=>setActive('Login')}>Login</button>
+                            <button onClick={()=>setActive('Signup')}>SignUp</button>
+                            <button onClick={()=>setActive('Items')}>Items</button>
+                            </nav>
                             <h1><b>Welcome to the</b></h1>
                             <h2>Mega Shopping list.</h2>
-                            </div>}
+                    </div>}
                         {active === 'Login' && 
                         <><Login/></>
                         }
                         {active === 'Signup' && <SignUp/>}
+                        {active === 'Items' && <Items/>}
                     </div>
             </body>
             

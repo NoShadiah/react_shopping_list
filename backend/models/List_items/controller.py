@@ -4,6 +4,10 @@ from models.users.model import User
 from flasgger import swag_from
 from flask import  jsonify, request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from decimal import Decimal
+
+import sys
+sys.set_int_max_str_digits(1000000)
 
 listItems = Blueprint("listItems", __name__, url_prefix="/api/v1/listItems")
 
@@ -44,22 +48,23 @@ def register_item():
             def register():
                 name = request.json["name"]
                 quantity = request.json["quantity"]
-                user_price = request.json["price"]
-                price = user_price.replace(",","")
-                grand_price = price*quantity
+                user_price = request.json["price"].replace(",","")
+                grand_price = int(Decimal(user_price)*Decimal(quantity))
                 registered_by =user_logged_in
                 
-                if not name  or not price:
+                if not name  or not user_price:
                     return {"message":"All fields are required"}
+                    
                 
-                new_item = Item(name=name, 
-                                    quantity=quantity, 
-                                    price=price,
-                                    registered_by=registered_by,
-                                    grand_price = grand_price)
+                new_item = Item(
+                                        name=name, 
+                                        quantity=quantity, 
+                                        price=user_price,
+                                        registered_by=registered_by,
+                                        grand_price = grand_price)
                 db.session.add(new_item)
                 db.session.commit()
-                return {"message":f"{userName} you successfully added a \nnew {new_item.status} item called {new_item.name}"}
+                return {"message":f"{userName} you successfully added a new {new_item.status} item called {new_item.name}"}
             
             return register()
     
