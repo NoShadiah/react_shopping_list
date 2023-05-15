@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./overall.css";
 import { AddItem } from "../ading/addItem";
+import { RetrieveAll } from "../reading/retrieving_all";
 
 // import {Navigate, Link} from "react-router-dom";
 
@@ -22,8 +23,8 @@ export function Items(){
             </div>
             <div>
                 {active === "add item" && <AddItem/>}
-                {active === "view all" && <ViewAll/>}
-                {active === "add item" && <Categorized/>}
+                {active === "view all" && <RetrieveAll/>}
+                {/* {active === "add item" && <Categorized/>} */}
             </div>
             
             

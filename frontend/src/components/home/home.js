@@ -4,6 +4,7 @@ import { Login } from "../Login/login";
 import { SignUp } from "../Signup/signup";
 import {Navigate, Link} from "react-router-dom";
 import { Items } from "../items/overrall/overall";
+import { RetrieveAll } from "../items/reading/retrieving_all";
 import "./home.css"
 
 export function Home(){

@@ -17,22 +17,23 @@ def get_all():
     user_logged_in=get_jwt_identity()
     check_user_details = User.query.filter_by(id=user_logged_in).first()
     userType = check_user_details.user_type
-    if userType != "client":
+    if not check_user_details or userType == "super admin":
         return {"message":"Sorry access denied"}
     else:
-        items = Item.query.filter_by(registered_by=user_logged_in).first()
+        items = Item.query.filter_by(registered_by=user_logged_in)
         response = [{
             "id":item.id,
             "name":item.name,
             "price unit":item.price_unit,
             "price":item .price,
+            "grand price": item.grand_price,
             "status":item.status,
             "quantity":item.quantity,
             "registered_at":item.registered_at,
             "registered_by":item.registered_by,
             "updated_at":item.updated_at
     } for item in items]
-        return {"Total":f"You have registered {len(items)} items", "data":response}
+        return {"Total":f"You have registered  items", "data":response}
 
 @listItems.route("/register", methods=['POST'])
 @jwt_required()
@@ -52,7 +53,7 @@ def register_item():
                 grand_price = int(Decimal(user_price)*Decimal(quantity))
                 registered_by =user_logged_in
                 
-                if not name  or not user_price:
+                if not name  or not user_price or not quantity:
                     return {"message":"All fields are required"}
                     
                 
@@ -119,13 +120,15 @@ def status_items(status):
         return {"message":"Sorry access denied"}
     
     else:
-         items = Item.query.filter_by(status=status).first()
+         items = Item.query.filter_by(status=status)
+
          response = [{
             "id":item.id,
             "name":item.name,
             "price unit":item.price_unit,
             "price":item .price,
             "quantity":item.quantity,
+            "grand price":item.grand_price,
             "registered_at":item.registered_at,
             "updated_at":item.updated_at
     } for item in items]
