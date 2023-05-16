@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./overall.css";
 import { AddItem } from "../ading/addItem";
 import { RetrieveAll } from "../reading/retrieving_all";
+import { ClearedItems, Uncleared } from "../reading/filtering";
 
 // import {Navigate, Link} from "react-router-dom";
 
@@ -19,12 +20,14 @@ export function Items(){
             <div>
                 <button value="add item" onClick={handleOptionClick}>Add Item</button>
                 <button value="view all" onClick={handleOptionClick}>View all</button>
-                <button value="categorized items" onClick={handleOptionClick}>Categorized items</button>
+                <button value="uncleared items" onClick={handleOptionClick}>Uncleared items</button>
+                <button value="cleared items" onClick={handleOptionClick}>Cleared items</button>
             </div>
             <div>
                 {active === "add item" && <AddItem/>}
                 {active === "view all" && <RetrieveAll/>}
-                {/* {active === "add item" && <Categorized/>} */}
+                {active === "uncleared items" && <Uncleared/>}
+                {active === "clearede items" && <ClearedItems/>}
             </div>
             
             

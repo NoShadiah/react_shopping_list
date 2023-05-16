@@ -41,8 +41,8 @@ export function Login(){
             if (data.access_token){
                 // setIsLoggedIn(true);
                 alert(data.message)
+                localStorage.removeItem('myaccess_token', JSON.stringify(data.access_token));
                 localStorage.setItem('myaccess_token', JSON.stringify(data.access_token));
-                localStorage.setItem('myrefresh_token', JSON.stringify(data.refresh_token));
                 localStorage.setItem('myuser_type', JSON.stringify(data.user_type));
             }
             

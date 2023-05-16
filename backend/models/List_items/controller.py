@@ -116,11 +116,11 @@ def status_items(status):
     user_logged_in=get_jwt_identity()
     check_user_details = User.query.filter_by(id=user_logged_in).first()
     userType = check_user_details.user_type
-    if userType != "super admin":
+    if userType == "super admin":
         return {"message":"Sorry access denied"}
     
     else:
-         items = Item.query.filter_by(status=status)
+         items = Item.query.filter_by(status=status) and Item.query.filter_by(registered_by=user_logged_in)
 
          response = [{
             "id":item.id,
@@ -132,4 +132,4 @@ def status_items(status):
             "registered_at":item.registered_at,
             "updated_at":item.updated_at
     } for item in items]
-         return {"Total":f"You have {len(items)} {status} items", "data":response}
+         return {"Total":f"You have {len(response)} {status} items", "data":response}
