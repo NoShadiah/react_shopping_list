@@ -1,6 +1,10 @@
 # react_shopping_list
 This app is designed to enable users to make their shopping lists, a user can login, signup, and filter their shopping lists
 Designed in reactjs and flask for backend. **fully functioning though not perfectly styled**
+
+![landing](https://github.com/NoShadiah/react_shopping_list/assets/107610642/f085b977-13a8-4758-b022-61cb22ed2d6a)
+
+
 - Users can signup, update.
 - ![login](https://github.com/NoShadiah/react_shopping_list/assets/107610642/2cd4f128-b736-482a-97f6-4f459e0cb38b)
 
