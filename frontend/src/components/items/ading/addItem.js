@@ -8,7 +8,7 @@ export function AddItem(){
     const [Name, setName]=useState("");
     const [Price, setPrice]=useState("");
     const [Quantity, setQuantity]=useState("");
-    const[mytoken, setMytoken] = useState(localStorage.getItem("myaccess_token"));
+    var myToken = localStorage.getItem('myaccess_token')
     // 
     
     
@@ -37,7 +37,7 @@ export function AddItem(){
             headers:{
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization':`Bearer ${mytoken.slice(0, mytoken.length)}` 
+                'Authorization':`Bearer ${myToken}` 
                 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDA5ODU0NywianRpIjoiY2E2NjRmOTYtYWFkYS00NGQ1LWIxY2EtN2IzMmFjNDg5MjFhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNjg0MDk4NTQ3LCJleHAiOjE2ODQwOTk0NDd9.C4DiCXV6Rlr0M_-S2U9aLtZbMV74OHmWgdS32DPxNeg`
             },
             body: JSON.stringify({

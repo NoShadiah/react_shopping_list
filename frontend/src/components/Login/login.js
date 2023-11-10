@@ -40,10 +40,17 @@ export function Login(){
             console.log(data); 
             if (data.access_token){
                 // setIsLoggedIn(true);
+                var token = data.access_token;
+                var token1 = token.replace('"',"");
+                console.log(token1)
+
                 alert(data.message)
-                localStorage.removeItem('myaccess_token', JSON.stringify(data.access_token));
-                localStorage.setItem('myaccess_token', JSON.stringify(data.access_token));
+                localStorage.removeItem('myaccess_token', data.access_token);
+                localStorage.setItem('myaccess_token', data.access_token);
                 localStorage.setItem('myuser_type', JSON.stringify(data.user_type));
+                // localStorage.removeItem('myaccess_token', JSON.stringify(data.access_token));
+                // localStorage.setItem('myaccess_token', JSON.stringify(data.access_token));
+                // localStorage.setItem('myuser_type', JSON.stringify(data.user_type));
             }
             
 

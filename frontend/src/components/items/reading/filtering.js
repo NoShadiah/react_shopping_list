@@ -47,6 +47,7 @@ export function Uncleared(){
 
 export function ClearedItems(){
     const[cleared, setClearedItems] = useState([]);
+    var myToken = localStorage.getItem('myaccess_token');
 
     useEffect(()=>{
         const ClearedIs =() =>{
@@ -54,7 +55,7 @@ export function ClearedItems(){
                 headers : { 
                   'Content-Type': 'application/json',
                   'Accept': 'application/json',
-                  'Authorization':`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDEzNzAzNSwianRpIjoiNGVhNDdjNzQtZTNhNC00Mjk2LWI3YTgtYWU5OTI1ZDQ0NzgyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNjg0MTM3MDM1LCJleHAiOjE2ODQxMzc5MzV9.0-UJibtC_yrqsUsPL8iZA2Zmidvu3Kl4NrdTvvtr1Cw`
+                  'Authorization':`Bearer ${myToken}`
                  }
           }).then((response) => response.json())
             .then((data)=>{setClearedItems(data.data); localStorage.setItem('myClearedItems', JSON.stringify(data.data))})

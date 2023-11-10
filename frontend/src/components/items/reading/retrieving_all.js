@@ -4,13 +4,14 @@ export function RetrieveAll(){
 
     // Fecth listItems
     const[listItems, setlistItems] = useState([])
+    var myToken = localStorage.getItem('myaccess_token')
     useEffect(()=>{
         const fetchlistItems =() =>{
             fetch('http://localhost:5000/api/v1/listItems/all',{
                 headers : { 
                   'Content-Type': 'application/json',
                   'Accept': 'application/json',
-                  'Authorization':`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NDEzNjExOSwianRpIjoiMGY1NGM3YzQtNDJlZS00NGQ4LWFhM2QtMmE3MmFmODliZGU5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNjg0MTM2MTE5LCJleHAiOjE2ODQxMzcwMTl9.zHeL8NiPnmNlTN0khbf0JrEtu5O_DyZeW3kKgSnah54`
+                  'Authorization':`Bearer ${myToken}`
                  }
           }).then((response) => response.json())
             .then((data)=>{setlistItems(data.data); localStorage.setItem('mylistItems', JSON.stringify(data.data))})
